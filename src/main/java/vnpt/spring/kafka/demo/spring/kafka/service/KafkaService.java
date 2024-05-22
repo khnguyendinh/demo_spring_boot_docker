@@ -7,6 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -19,7 +20,8 @@ public class KafkaService {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String  message){
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicName, message);
+        UUID uuid = UUID.randomUUID();
+        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicName,uuid.toString(), message);
         future.whenComplete((result, ex) -> {
             if (ex == null) {
                 System.out.println("Sent message=[" + message +

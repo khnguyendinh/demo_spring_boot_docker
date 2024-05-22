@@ -20,7 +20,7 @@ public class KafkaController {
 
     @PostMapping(value = "/send-msg", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<ResponseModel> syncLogs(@RequestBody String body, @RequestHeader HttpHeaders headers){
+    public ResponseEntity<ResponseModel> syncMsgs(@RequestBody String body, @RequestHeader HttpHeaders headers){
         ResponseModel responseModel = null;
         kafkaService.sendMessage(body);
         return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.OK);
@@ -29,5 +29,12 @@ public class KafkaController {
     @ResponseBody
     public String addDc02Special(@RequestBody String body ) {
         return "1";
+    }
+    @PostMapping(value = "/consume-msg", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity<ResponseModel> consumeMsgs(@RequestBody String body, @RequestHeader HttpHeaders headers){
+        ResponseModel responseModel = null;
+        kafkaService.sendMessage(body);
+        return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.OK);
     }
 }
